@@ -1,9 +1,5 @@
+import fileinput
 import numpy as np
-
-
-def get_input():
-    with open("input.txt", "r") as file:
-        return file.readlines()
 
 
 def calc_fuel(data):
@@ -26,7 +22,7 @@ def part_2(data):
 
 
 if __name__ == "__main__":
-    inp = get_input()
+    inp = list(fileinput.input())
     inp = [int(x.strip()) for x in inp if len(x.strip()) > 0]
     print(part_1(np.array(inp, dtype=np.int)))
 
