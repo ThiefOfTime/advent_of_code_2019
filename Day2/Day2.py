@@ -1,4 +1,7 @@
-def intcode(data):
+from typing import List
+
+
+def intcode(data: List[int]) -> List[int]:
     i = 0
     while i < len(data):
         if data[i] == 99 or i > len(data) - 4:
@@ -14,16 +17,16 @@ def intcode(data):
     return data
 
 
-def part_1(data):
+def part_1(data: List[int]) -> int:
     data[1] = 12
     data[2] = 2
     return intcode(data)
 
 
-def part_2(data):
+def part_2(data: List[int]) -> int:
     noun = 0
     # the verb only controls the last 2 digits
-    # 
+    # therefore reducing the amount of calculation amount
     for i in range(12, 100):
         n_data = data.copy()
         n_data[1] = i
@@ -39,7 +42,6 @@ def part_2(data):
         res = intcode(n_data)[0]
         if res == 19690720:
             return 100 * noun + j
-
 
 
 if __name__ == "__main__":

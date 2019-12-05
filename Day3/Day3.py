@@ -1,11 +1,11 @@
 import numpy as np
 from scipy.spatial.distance import cdist
-
+from typing import List
 
 CENTRAL_PORT = (3000, 8000)
 
 
-def build_field(data):
+def build_field(data: List[int]) -> np.ndarray:
     base = np.zeros((12000, 18000), dtype=np.int)
     curr_point_x = CENTRAL_PORT[0]
     curr_point_y = CENTRAL_PORT[1]
@@ -28,13 +28,13 @@ def build_field(data):
     return base
 
 
-def calculate_manhatten_distance(data_1, data_2):
+def calculate_manhatten_distance(data_1: List[int], data_2: List[int]) -> int:
     field = build_field(data_1) + build_field(data_2)
     intersections = np.argwhere(field > 1)
     return min(cdist(np.array([[CENTRAL_PORT[1], CENTRAL_PORT[0]]]), intersections, metric='cityblock')[0])
 
 
-def run_calculation(data_1, data_2):
+def run_calculation(data_1: List[int], data_2: List[int]) -> int:
     field = build_field(data_1) + build_field(data_2)
     intersections = np.argwhere(field > 1)
     r_data_1 = calculate_steps_taken(data_1, field, intersections)
@@ -45,7 +45,7 @@ def run_calculation(data_1, data_2):
     return min(results)
 
 
-def calculate_steps_taken(data, field, intersections):
+def calculate_steps_taken(data: List[int], field: np.ndarray, intersections: np.ndarray) -> int:
     steps = {tuple(i): 0 for i in intersections}
     curr_point_x = CENTRAL_PORT[0]
     curr_point_y = CENTRAL_PORT[1]
@@ -84,7 +84,6 @@ def calculate_steps_taken(data, field, intersections):
             curr_point_y -= value
         c_steps += value
     return steps
-
 
 
 if __name__ == "__main__":
